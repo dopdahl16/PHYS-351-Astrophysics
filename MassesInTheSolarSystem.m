@@ -37,4 +37,17 @@ eccentricity = (max_dist - min_dist)/(max_dist + min_dist);
 
 % let the period of the orbit be 11.5 hours with 0.14 uncertainty
 orbital_period = 11.5 * 60 * 60; % in seconds
-mass_of_system = (semi_major_axis*1.7371*10^6)^3*4*pi^2/(6.67408*10^-11*(orbital_period)^2); 
+mass_of_system = (semi_major_axis*1.7371*10^6)^3*4*pi^2/(6.67408*10^-11*(orbital_period)^2) % in kg
+accecpted_mass_of_moon = 7.34767*10^22 % in kg
+
+% Estimating uncertainty here is tricky, because there's not much
+% uncertainty to begin with. We don't have an uncertainty in the
+% satellite's position, which means we can't calculate an uncertainty in
+% the semimajor axis or the eccentricity. Based on the estimated
+% uncertainty in the orbit, however, I estimate the uncertainty in the
+% mass of the moon to be roughly the same % uncertainty as in the period of
+% the orbit, about 1.2% uncertainty. Using this uncertainty, the accepted
+% value of the mass of the moon does fall within the error bars for our
+% calculated value. Since the uncertainty was 1.2%, I give it a 98.8%
+% likihood that the accepted value of the moon is within our uncertainty
+% range. 
