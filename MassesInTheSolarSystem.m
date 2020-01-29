@@ -24,14 +24,14 @@ min_dist = min(distances);
 farthest = [x_axis(find(distances == max_dist)), y_axis(find(distances == max_dist))];
 closest = [x_axis(find(distances == min_dist)), y_axis(find(distances == min_dist))];
 
-semi_major_axis = (sqrt((farthest(2)-closest(2))^2 + (farthest(1)-closest(1))^2))/2; % lunar radii
+semi_major_axis = (sqrt((farthest(2)-closest(2))^2 + (farthest(1)-closest(1))^2))/2 % lunar radii
 
 %%% Estimate eccentricity of orbit
 
 % Here, we use the fact that the satellite is basically massless when
 % compared with the moon, so the moon is basically the center of mass of
 % the system
-eccentricity = (max_dist - min_dist)/(max_dist + min_dist);
+eccentricity = (max_dist - min_dist)/(max_dist + min_dist)
 
 %%% Estimate mass of moon
 
@@ -41,7 +41,7 @@ mass_of_system = (semi_major_axis*1.7371*10^6)^3*4*pi^2/(6.67408*10^-11*(orbital
 accecpted_mass_of_moon = 7.34767*10^22 % in kg
 
 % Estimating uncertainty here is tricky, because there's not much
-% uncertainty to begin with. We don't have an uncertainty in the
+% uncertanty to begin with. We don't have an uncertainty in the
 % satellite's position, which means we can't calculate an uncertainty in
 % the semimajor axis or the eccentricity. Based on the estimated
 % uncertainty in the orbit, however, I estimate the uncertainty in the

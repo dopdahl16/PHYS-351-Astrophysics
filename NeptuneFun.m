@@ -59,9 +59,9 @@ triton_vectors(3,8) = 238.35;
 
 % to determine the semimajor axis, we average the magnitude vectors
 
-semi_major_axis = (triton_vectors(1,1)+triton_vectors(1,2)+triton_vectors(1,3)+triton_vectors(1,4)+triton_vectors(1,5)+triton_vectors(1,6)+triton_vectors(1,7)+triton_vectors(1,8))/8;
+semi_major_axis = (triton_vectors(1,1)+triton_vectors(1,2)+triton_vectors(1,3)+triton_vectors(1,4)+triton_vectors(1,5)+triton_vectors(1,6)+triton_vectors(1,7)+triton_vectors(1,8))/8
 t = triton_vectors';
-unc_semi_major_axis = std(t);
+unc_semi_major_axis = std(t)
 
 % to determine the period, I selected two angles that were the closest to
 % eachother and found the difference in time between the two
@@ -77,10 +77,10 @@ for i = 1:7
     angular_velocity(i) = angle_covered / time_elapssed;
 end
 
-avg_angular_speed = mean(angular_velocity);
-unc_avg_angular_speed = std(angular_velocity);
+avg_angular_speed = mean(angular_velocity)
+unc_avg_angular_speed = std(angular_velocity)
 
-period = (avg_angular_speed / (2*pi))^(-1);
+period = (avg_angular_speed / (2*pi))^(-1)
 
-mass_neptune = (semi_major_axis^3*4*pi^2)/(6.67408*10^-11*period^2);
-unc_mass_neptune = sqrt((unc_semi_major_axis(1))^2 + (unc_avg_angular_speed)^2);
+mass_neptune = (semi_major_axis^3*4*pi^2)/(6.67408*10^-11*period^2)
+unc_mass_neptune = sqrt((unc_semi_major_axis(1))^2 + (unc_avg_angular_speed)^2)

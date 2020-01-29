@@ -1,0 +1,124 @@
+% data_table = readtable('bvirdata.xlsx');
+% data = table2array(data_table);
+% for row = 1:length(data)
+%     if isnan(data(row, 5)) && ~isnan(data(row, 6))
+%         data(row, 7) = data(row, 6);
+%     end
+%     if ~isnan(data(row, 5)) && isnan(data(row, 6))
+%         data(row, 7) = data(row, 5);
+%     end
+%     if ~isnan(data(row, 5)) && ~isnan(data(row, 6))
+%         data(row, 7) = (data(row, 5) + data(row, 6))/2;
+%     end
+% end
+% bv = [data(280,7),
+%     data(317,7),
+%     data(338,7),
+%     data(357,7),
+%     data(376,7),
+%     data(464,7)
+%     data(533,7),
+%     data(596,7),
+%     data(599,7),
+%     data(634,7),
+%     data(684,7),
+%     data(696,7),
+%     data(702,7),
+%     data(722,7),
+%     data(776,7),
+%     data(907,7),
+%     data(928,7),
+%     data(980,7),
+%     data(1194,7),
+%     data(1218,7),
+%     data(1222,7),
+%     data(1275,7),
+%     data(1494,7),
+%     data(1855,7),
+%     data(1887,7)]; 
+% ir = [data(280,4),
+%     data(317,4),
+%     data(338,4),
+%     data(357,4),
+%     data(376,4),
+%     data(464,4)
+%     data(533,4),
+%     data(596,4),
+%     data(599,4),
+%     data(634,4),
+%     data(684,4),
+%     data(696,4),
+%     data(702,4),
+%     data(722,4),
+%     data(776,4),
+%     data(907,4),
+%     data(928,4),
+%     data(980,4),
+%     data(1194,4),
+%     data(1218,4),
+%     data(1222,4),
+%     data(1275,4),
+%     data(1494,4),
+%     data(1855,4),
+%     data(1887,4)];
+% scatter(ir, bv)
+% scatter(data(:,4), data(:,7), '.')
+
+
+%%%%
+periods = xlsread('periods.xlsx','Sheet2');
+G = 6.674e-11;
+for row = 1: length(periods)
+    periods(row, 4) = periods(row, 2) * 24 * 60 * 60;
+    periods(row, 5) = periods(row, 3) * 24 * 60 * 60;
+    periods(row, 6) = (2*pi/periods(row,4))^2/((4/3)*pi*G);
+end
+histo_data = [];
+count = 1;
+temp = [];
+for row = 1:length(periods)
+    if ~isnan(periods(row,1))
+        if length(temp) > 0
+            histo_data(count) = min(temp);
+            count = count + 1;
+        end
+        temp = [];
+        j = 0;
+    end
+    j = j + 1;
+    temp(j) = periods(row, 6);
+end
+if length(temp) > 0
+    histo_data(count) = min(temp);
+    count = count + 1;
+end
+% figure
+% histogram(histo_data,7)
+% hold on
+% title("Densities of LPV Stars")
+% xlabel("Density (kg/m^3)")
+% ylabel("Count")
+radii = xlsread('radius_data.xlsx');
+density_radius = zeros(27,3);
+count = 1;
+for i = 1:length(periods)
+    if ~isnan(periods(i,1))
+        density_radius(count,1) = periods(i,1);
+        density_radius(count,2) = histo_data(count);
+        count = count + 1;
+    end
+end
+for row = 1:length(radii)
+    if ~(radii(row, 6) == 0)
+        for i = 1:length(density_radius)
+            if density_radius(i,1) == row + 1
+                density_radius(i,3) = radii(row,6);
+            end
+        end
+    end
+end
+density_radius_mass = density_radius;
+density_radius_mass(1,4) = 0;
+for index = 1:length(density_radius_mass)
+    density_radius_mass(index,4) = density_radius_mass(index,2) * (4/3) * pi * density_radius_mass(index,3)^3;
+end
